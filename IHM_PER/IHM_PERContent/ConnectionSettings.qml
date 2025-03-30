@@ -4,7 +4,7 @@ import QtQuick.Window 2.15
 
 Window {
     visible: true
-    width: 400
+    width: 470
     height: 300
     minimumWidth: width
     maximumWidth: width
