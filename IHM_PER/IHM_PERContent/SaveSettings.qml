@@ -3,18 +3,15 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 
 Window {
+    width: 700
+    height: 200
     visible: true
-    width: 470
-    height: 300
     minimumWidth: width
     maximumWidth: width
     minimumHeight: height
     maximumHeight: height
     flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
-    title: "Connection Settings"
-
-    ConnectionSettingsForm {
+    title: "Save Settings"
+    SaveSettingsForm{
     }
 }
-
-

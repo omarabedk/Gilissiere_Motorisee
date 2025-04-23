@@ -22,6 +22,19 @@ Rectangle {
     color: "#292929"
     antialiasing: false
 
+    // Connection status indicator
+    Rectangle {
+        id: connectionIndicator
+        x: 1349
+        y: 157
+        width: 20
+        height: 20
+        radius: 10
+        color: connectionHandler.is_connected ? "green" : "red"
+        border.width: 1
+        border.color: "black"
+    }
+
     Text {
         id: _text
         x: 561
@@ -37,7 +50,8 @@ Rectangle {
         width: 137
         height: 27
         color: "#ffffff"
-        text: qsTr("Connected")
+        text: connectionHandler.is_connected ? qsTr("Connected") : qsTr(
+                                                   "Not Connected")
         font.pointSize: 15
         anchors.verticalCenterOffset: -373
         anchors.horizontalCenterOffset: 669
@@ -294,20 +308,102 @@ Rectangle {
     }
 
     Connections {
+        target: motorSettBttn
+
+        property var motorSettingsWindow
+
+        // Track the window instance
+        function onClicked() {
+            if (!motorSettingsWindow) {
+                // Check if already open
+                var component = Qt.createComponent("MotorSettings.qml")
+                if (component.status === Component.Ready) {
+                    motorSettingsWindow = component.createObject(parent)
+                    motorSettingsWindow.show()
+
+                    // Handle window closing
+                    motorSettingsWindow.closing.connect(function () {
+                        motorSettingsWindow.destroy()
+                        motorSettingsWindow = null // Reset reference when closed
+                    })
+                } else {
+                    console.log("Error loading MotorSettings.qml")
+                }
+            } else {
+                // Bring the existing window to the front
+                motorSettingsWindow.requestActivate()
+            }
+        }
+    }
+
+    Connections {
+        target: saveSettBttn
+
+        property var saveSettingsWindow
+
+        // Track the window instance
+        function onClicked() {
+            if (!saveSettingsWindow) {
+                // Check if already open
+                var component = Qt.createComponent("SaveSettings.qml")
+                if (component.status === Component.Ready) {
+                    saveSettingsWindow = component.createObject(parent)
+                    saveSettingsWindow.show()
+
+                    // Handle window closing
+                    saveSettingsWindow.closing.connect(function () {
+                        saveSettingsWindow.destroy()
+                        saveSettingsWindow = null // Reset reference when closed
+                    })
+                } else {
+                    console.log("Error loading SaveSettings.qml")
+                }
+            } else {
+                // Bring the existing window to the front
+                saveSettingsWindow.requestActivate()
+            }
+        }
+    }
+
+    Connections {
+        target: aboutUsSett
+
+        property var aboutUsWindow
+
+        // Track the window instance
+        function onClicked() {
+            if (!aboutUsWindow) {
+                // Check if already open
+                var component = Qt.createComponent("AboutUs.qml")
+                if (component.status === Component.Ready) {
+                    aboutUsWindow = component.createObject(parent)
+                    aboutUsWindow.show()
+
+                    // Handle window closing
+                    aboutUsWindow.closing.connect(function () {
+                        aboutUsWindow.destroy()
+                        aboutUsWindow = null // Reset reference when closed
+                    })
+                } else {
+                    console.log("Error loading AboutUs.qml")
+                }
+            } else {
+                // Bring the existing window to the front
+                aboutUsWindow.requestActivate()
+            }
+        }
+    }
+
+    Connections {
         target: menuBttn
         onClicked: {
-
-
-            /*if (sideMenu.x === 0) {
-                sideMenu.x = -sideMenu.width
-                sideMenu.opacity = 0
-            }*/
             if (sideMenu.x !== 0) {
                 sideMenu.x = 0
                 sideMenu.opacity = 1
             }
         }
     }
+
     Connections {
         target: backMenuBttn
         onClicked: {

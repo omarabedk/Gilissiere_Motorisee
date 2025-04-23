@@ -19,8 +19,10 @@ Window {
     flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
     visible: true
     title: "IHM_PER"
+
     Screen01 {
         id: mainScreen
 
     }
+
 }

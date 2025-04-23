@@ -9,118 +9,112 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 import QtQuick
 import QtQuick.Controls
 
-Item {
+Rectangle {
+    id: rectangle
+    x: 0
+    y: 0
     width: 470
     height: 300
-    opacity: 1
+    color: "#ffffff"
 
-    property alias button: button
+    Button {
+        id: connectBttn
+        x: 146
+        y: 229
+        width: 196
+        height: 47
 
-    Rectangle {
-        id: rectangle
-        x: 0
-        y: 0
-        width: 470
-        height: 300
-        color: "#ffffff"
+        hoverEnabled: true // Enable hover effects
 
-        Button {
-            id: button
-            x: 146
-            y: 229
-            width: 196
-            height: 47
-            text: qsTr("Connect")
-            hoverEnabled: true // Enable hover effects
-
-            // Text color (white)
-            contentItem: Text {
-                text: button.text
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.pointSize: 15
-                font.bold: true
-                color: button.hovered ? "grey" : "#white"
-            }
-
-            // Background styling (with hover effect)
-            background: Rectangle {
-                id: buttonBackground
-                radius: 10
-                color: "grey" // Hover turns grey, default is dark
-            }
+        // Text color (white)
+        contentItem: Text {
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pointSize: 15
+            font.bold: true
+            color: connectBttn.hovered ? "grey" : "#white"
+            text: connectionHandler.is_connected ? qsTr("Disconnect") : qsTr(
+                                                       "Connect")
         }
 
-        Text {
-            id: _text
-            x: 146
-            y: 16
-            text: qsTr("Connection Settings")
-            font.pixelSize: 20
-        }
-
-        Text {
-            id: _text1
-            x: 32
-            y: 82
-            width: 65
-            height: 16
-            text: qsTr("IP Address")
-            font.pixelSize: 17
-        }
-
-        Text {
-            id: _text2
-            x: 32
-            y: 128
-            text: qsTr("Port")
-            font.pixelSize: 17
-        }
-
-        Text {
-            id: _text3
-            x: 32
-            y: 172
-            text: qsTr("Server Address")
-            font.pixelSize: 17
-        }
-
-        SpinBox {
-            id: spinBox1
-            x: 156
-            y: 172
-            width: 109
-            height: 32
-            value: 1
-        }
-
-        Label {
-            id: label
-            x: 300
-            y: 72
-            text: qsTr(".")
-            font.pointSize: 20
-        }
-
-        Label {
-            id: label1
-            x: 224
-            y: 72
-            text: qsTr(".")
-            font.pointSize: 20
-        }
-
-        Label {
-            id: label2
-            x: 375
-            y: 72
-            text: qsTr(".")
-            font.pointSize: 20
+        // Background styling (with hover effect)
+        background: Rectangle {
+            id: buttonBackground
+            radius: 10
+            color: "grey" // Hover turns grey, default is dark
         }
     }
 
+    Text {
+        id: _text
+        x: 146
+        y: 16
+        text: qsTr("Connection Settings")
+        font.pixelSize: 20
+        font.bold: false
+    }
+
+    Text {
+        id: _text1
+        x: 32
+        y: 82
+        width: 81
+        height: 26
+        text: qsTr("IP Address")
+        font.pixelSize: 17
+    }
+
+    Text {
+        id: _text2
+        x: 32
+        y: 128
+        text: qsTr("Port")
+        font.pixelSize: 17
+    }
+
+    Text {
+        id: _text3
+        x: 32
+        y: 172
+        text: qsTr("Server Address")
+        font.pixelSize: 17
+    }
+
     SpinBox {
-        id: spinBox
+        id: serverAddSpinbx
+        x: 156
+        y: 170
+        width: 109
+        height: 32
+        value: 1
+    }
+
+    Label {
+        id: label
+        x: 300
+        y: 72
+        text: qsTr(".")
+        font.pointSize: 20
+    }
+
+    Label {
+        id: label1
+        x: 224
+        y: 72
+        text: qsTr(".")
+        font.pointSize: 20
+    }
+
+    Label {
+        id: label2
+        x: 375
+        y: 72
+        text: qsTr(".")
+        font.pointSize: 20
+    }
+    SpinBox {
+        id: portSpinbx
+        stepSize: 1
         x: 156
         y: 124
         width: 108
@@ -131,46 +125,104 @@ Item {
     }
 
     SpinBox {
-        id: spinBox2
+        id: ipAdd1Spinbx
+        stepSize: 1
         x: 156
         y: 78
         width: 65
         height: 32
         value: 192
+        from: 0
         to: 255
         editable: true
     }
 
     SpinBox {
-        id: spinBox3
+        id: ipAdd2Spinbx
+        stepSize: 1
         x: 232
         y: 78
         width: 65
         height: 32
-        value: 162
+        value: 168
+        from: 0
         to: 255
         editable: true
     }
 
     SpinBox {
-        id: spinBox4
+        id: ipAdd3Spinbx
+        stepSize: 1
         x: 308
         y: 78
         width: 65
         height: 32
         value: 1
+        from: 0
         to: 255
         editable: true
     }
 
     SpinBox {
-        id: spinBox5
+        id: ipAdd4Spinbx
+        stepSize: 1
         x: 383
         y: 78
         width: 65
         height: 32
         value: 2
+        from: 0
         to: 255
         editable: true
+    }
+
+    Connections {
+        target: connectBttn
+        onClicked: {
+            // Create a proper JS array of numbers (not QML objects)
+            var ipParts = [Number(ipAdd1Spinbx.value), Number(
+                               ipAdd2Spinbx.value), Number(
+                               ipAdd3Spinbx.value), Number(ipAdd4Spinbx.value)]
+
+            // Convert all values to proper numbers
+            var portNumber = Number(portSpinbx.value)
+            var serverAddressNumber = Number(serverAddSpinbx.value)
+
+            // Call the Python method with explicit number types
+            connectionHandler.connect_button_clicked(ipParts, portNumber,
+                                                     serverAddressNumber)
+        }
+    }
+
+    Connections {
+        target: connectionHandler
+        function onConnectionStatusChanged(isConnected) {
+            connectBttn.text = isConnected ? qsTr("Disconnect") : qsTr(
+                                                 "Connect")
+            buttonBackground.color = isConnected ? "green" : "grey"
+        }
+        function onErrorOccurred(message) {
+            errorPopup.text = message
+            errorPopup.open()
+        }
+    }
+
+    Popup {
+        id: errorPopup
+        x: 100
+        y: 100
+        width: 300
+        height: 150
+        modal: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        Label {
+            id: errorLabel
+            anchors.fill: parent
+            wrapMode: Text.Wrap
+            text: "Error"
+        }
+
+        property alias text: errorLabel.text
     }
 }

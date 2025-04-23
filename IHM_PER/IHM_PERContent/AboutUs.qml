@@ -4,17 +4,20 @@ import QtQuick.Window 2.15
 
 Window {
     visible: true
-    width: 470
-    height: 300
+    width: 300
+    height: 150
     minimumWidth: width
     maximumWidth: width
     minimumHeight: height
     maximumHeight: height
     flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
-    title: "Connection Settings"
+    title: "A propos de nous"
 
-    ConnectionSettingsForm {
+    AbousUsForm {
     }
 }
+
+
+
 
 
