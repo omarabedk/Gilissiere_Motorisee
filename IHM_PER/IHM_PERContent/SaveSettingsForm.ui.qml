@@ -55,7 +55,7 @@ Rectangle {
         id: label1
         x: 27
         y: 86
-        text: qsTr("Path vers CSV")
+        text: qsTr("Chemin vers CSV")
         font.pointSize: 14
     }
 

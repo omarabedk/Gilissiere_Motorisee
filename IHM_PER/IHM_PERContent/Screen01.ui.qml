@@ -14,6 +14,10 @@ import IHM_PER_Design
 import QtQuick.Timeline 1.0
 
 Rectangle {
+    property alias menuBttn: menuBttn
+    property alias sideMenu: sideMenu
+    property alias backMenuBttn: backMenuBttn
+
     id: mainPage
     width: 1550
     height: Constants.height
@@ -50,8 +54,8 @@ Rectangle {
         width: 137
         height: 27
         color: "#ffffff"
-        text: connectionHandler.is_connected ? qsTr("Connected") : qsTr(
-                                                   "Not Connected")
+        text: connectionHandler.is_connected ? qsTr("Connecté") : qsTr(
+                                                   "Pas Connecté")
         font.pointSize: 15
         anchors.verticalCenterOffset: -373
         anchors.horizontalCenterOffset: 669
@@ -61,13 +65,13 @@ Rectangle {
 
     Button {
         id: resetGraphBttn
-        x: 847
+        x: 799
         y: 133
-        width: 185
+        width: 378
         height: 63
-        text: qsTr("Reset Graphs")
+        text: qsTr("Réinitialisation des graphs")
         font.bold: true
-        font.pointSize: 15
+        font.pointSize: 22
         background: Rectangle {
             id: resetGraphBttnBackground // Give the background an ID
             radius: 20
@@ -114,11 +118,11 @@ Rectangle {
 
     Button {
         id: startBttn
-        x: 461
+        x: 419
         y: 133
-        width: 185
+        width: 299
         height: 63
-        text: qsTr("Start")
+        text: qsTr("Commencer/Arreter")
         font.bold: true
         font.pointSize: 22
         background: Rectangle {
@@ -168,7 +172,7 @@ Rectangle {
 
             Button {
                 id: backMenuBttn
-                text: "Back"
+                text: "Retour"
                 height: 200
                 font.pointSize: 12
                 Layout.fillWidth: true
@@ -189,7 +193,7 @@ Rectangle {
             }
             Button {
                 id: connectSettBttn
-                text: "Connection Settings"
+                text: "Paramètres de connexion"
                 font.pointSize: 12
                 Layout.fillWidth: true
                 padding: 20
@@ -209,7 +213,7 @@ Rectangle {
             }
             Button {
                 id: motorSettBttn
-                text: "Motor Settings"
+                text: "Paramètres du moteur"
                 font.pointSize: 12
                 Layout.fillWidth: true
                 padding: 20
@@ -229,7 +233,7 @@ Rectangle {
             }
             Button {
                 id: saveSettBttn
-                text: "Save Settings"
+                text: "Paramètres du sauvegarde"
                 font.pointSize: 12
                 Layout.fillWidth: true
                 padding: 20
@@ -249,7 +253,7 @@ Rectangle {
             }
             Button {
                 id: aboutUsSett
-                text: "About Us"
+                text: "A propos de nous"
                 font.pointSize: 12
                 Layout.fillWidth: true
                 padding: 20
@@ -298,7 +302,7 @@ Rectangle {
                         connectionSettingsWindow = null // Reset reference when closed
                     })
                 } else {
-                    console.log("Error loading ConnectionSettings.qml")
+                    console.log("Erreur de chargement du ConnectionSettings.qml")
                 }
             } else {
                 // Bring the existing window to the front
@@ -327,7 +331,7 @@ Rectangle {
                         motorSettingsWindow = null // Reset reference when closed
                     })
                 } else {
-                    console.log("Error loading MotorSettings.qml")
+                    console.log("Erreur de chargement du MotorSettings.qml")
                 }
             } else {
                 // Bring the existing window to the front
@@ -356,7 +360,7 @@ Rectangle {
                         saveSettingsWindow = null // Reset reference when closed
                     })
                 } else {
-                    console.log("Error loading SaveSettings.qml")
+                    console.log("Erreur de chargement du SaveSettings.qml")
                 }
             } else {
                 // Bring the existing window to the front
@@ -385,40 +389,11 @@ Rectangle {
                         aboutUsWindow = null // Reset reference when closed
                     })
                 } else {
-                    console.log("Error loading AboutUs.qml")
+                    console.log("Erreur de chargement du AboutUs.qml")
                 }
             } else {
                 // Bring the existing window to the front
                 aboutUsWindow.requestActivate()
-            }
-        }
-    }
-
-    Connections {
-        target: menuBttn
-        onClicked: {
-            if (sideMenu.x !== 0) {
-                sideMenu.x = 0
-                sideMenu.opacity = 1
-            }
-        }
-    }
-
-    Connections {
-        target: backMenuBttn
-        onClicked: {
-            if (sideMenu.x === 0) {
-                sideMenu.x = -sideMenu.width
-                sideMenu.opacity = 0
-            }
-        }
-    }
-    Connections {
-        target: mainPage
-        onClicked: {
-            if (sideMenu.x === 0) {
-                sideMenu.x = -sideMenu.width
-                sideMenu.opacity = 0
             }
         }
     }

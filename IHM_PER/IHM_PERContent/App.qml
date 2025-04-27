@@ -1,6 +1,3 @@
-// Copyright (C) 2021 The Qt Company Ltd.
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
-
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
@@ -21,8 +18,27 @@ Window {
     title: "IHM_PER"
 
     Screen01 {
-        id: mainScreen
+            id: mainScreen
+        }
 
+
+    Connections {
+        target: mainScreen.menuBttn
+        onClicked: {
+            if (mainScreen.sideMenu.x !== 0) {
+                mainScreen.sideMenu.x = 0
+                mainScreen.sideMenu.opacity = 1
+            }
+        }
     }
 
+    Connections {
+        target: mainScreen.backMenuBttn
+        onClicked: {
+            if (mainScreen.sideMenu.x === 0) {
+                mainScreen.sideMenu.x = -mainScreen.sideMenu.width
+                mainScreen.sideMenu.opacity = 0
+            }
+        }
+    }
 }

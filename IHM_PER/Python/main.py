@@ -10,11 +10,11 @@ from Connection import ConnectionHandler  # Import our new handler
 
 if __name__ == '__main__':
     app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()
+    engine = QQmlApplicationEngine() #connection between python and QML project
 
     # Create and expose connection handler to QML
     connection_handler = ConnectionHandler()
-    engine.rootContext().setContextProperty("connectionHandler", connection_handler)
+    engine.rootContext().setContextProperty("connectionHandler", connection_handler) #send the connection_handler object to the QML
 
     app_dir = Path(__file__).parent.parent
     engine.addImportPath(os.fspath(app_dir))

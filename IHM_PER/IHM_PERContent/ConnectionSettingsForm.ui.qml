@@ -10,6 +10,17 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
+    property alias connectBttn: connectBttn
+    property alias buttonBackground: buttonBackground
+
+
+    /*property alias ipAdd1Spinbx: ipAdd1Spinbx
+    property alias ipAdd2Spinbx: ipAdd2Spinbx
+    property alias ipAdd3Spinbx: ipAdd3Spinbx
+    property alias ipAdd4Spinbx: ipAdd4Spinbx
+    property alias portSpinbx: portSpinbx
+    property alias serverAddSpinbx: serverAddSpinbx
+    property alias errorPopup: errorPopup*/
     id: rectangle
     x: 0
     y: 0
@@ -33,8 +44,8 @@ Rectangle {
             font.pointSize: 15
             font.bold: true
             color: connectBttn.hovered ? "grey" : "#white"
-            text: connectionHandler.is_connected ? qsTr("Disconnect") : qsTr(
-                                                       "Connect")
+            text: connectionHandler.is_connected ? qsTr("Diconnexion") : qsTr(
+                                                       "Connexion")
         }
 
         // Background styling (with hover effect)
@@ -47,9 +58,9 @@ Rectangle {
 
     Text {
         id: _text
-        x: 146
+        x: 146 //146
         y: 16
-        text: qsTr("Connection Settings")
+        text: qsTr("Paramètre du connexion")
         font.pixelSize: 20
         font.bold: false
     }
@@ -176,9 +187,11 @@ Rectangle {
         editable: true
     }
 
-    Connections {
+
+    /* Connections {
         target: connectBttn
         onClicked: {
+            buttonBackground.color = "green"
             // Create a proper JS array of numbers (not QML objects)
             var ipParts = [Number(ipAdd1Spinbx.value), Number(
                                ipAdd2Spinbx.value), Number(
@@ -205,8 +218,7 @@ Rectangle {
             errorPopup.text = message
             errorPopup.open()
         }
-    }
-
+    }*/
     Popup {
         id: errorPopup
         x: 100
