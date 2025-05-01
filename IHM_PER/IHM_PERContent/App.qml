@@ -8,41 +8,44 @@ Window {
     width: 1550
     height: 950
     minimumWidth: 1550
-    maximumWidth: 1550
     minimumHeight: 950
-    maximumHeight: 950
-    flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
+
     visible: true
     title: "IHM_PER"
+
+    // Properties to store the frozen x-axis range
+    property real frozenXAxisMin: 0
+    property real frozenXAxisMax: 10
 
     Screen01 {
         id: mainScreen
 
         ChartView {
             id: chartView
-            x: 286
+            x: 19
             y: 250
-            width: 1235
-            height: 600
+            width: 1502
+            height: 587
+            titleColor: "#a6a6b4"
             antialiasing: true
-            backgroundColor: "#ffffff"
+            backgroundColor: "#c1baba"
             legend.visible: true
             z: 10
 
             ValuesAxis {
                 id: xAxis
-                min: graphController.running ? Math.max(0, (graphController.time || 0) - 10) : 0
-                max: graphController.running ? (graphController.time || 10) : 10
-                titleText: "Time (s)"
+                min: graphController.running ? Math.max(0, (graphController.time || 0) - 10) : frozenXAxisMin
+                max: graphController.running ? (graphController.time || 10) : frozenXAxisMax
+                titleText: "Temps (s)"
                 labelsVisible: true
                 gridVisible: true
             }
 
             ValuesAxis {
                 id: yAxis
-                min: 0
-                max: 100  // Initial max, will be adjusted dynamically
-                titleText: "Value"
+                min: -100  // Initial min to allow negative values
+                max: 100   // Initial max
+                titleText: "Valeurs"
                 labelsVisible: true
                 gridVisible: true
             }
@@ -75,53 +78,152 @@ Window {
                 color: "green"
                 width: 2
                 pointsVisible: true
+                style: Qt.DashLine // Dotted line
             }
+
+            LineSeries {
+                id: negWpSeries
+                axisX: xAxis
+                axisY: yAxis
+                name: "-WP (tr/min)"
+                color: "green"
+                width: 2
+                pointsVisible: true
+                style: Qt.DashLine // Dotted line
+            }
+        }
+    }
+
+    // Update frozen x-axis range when running state changes
+    Connections {
+        target: graphController
+        function onRunningChanged() {
+            if (!graphController.running) {
+                // Store the current x-axis range when stopping
+                frozenXAxisMin = Math.max(0, (graphController.time || 0) - 10)
+                frozenXAxisMax = graphController.time || 10
+                console.log("Graph stopped, xAxis frozen: min =", frozenXAxisMin, ", max =", frozenXAxisMax)
+            }
+        }
+    }
+
+    // Reset x-axis and y-axis on graph reset
+    Connections {
+        target: graphController
+        function onResetOccurred() {
+            console.log("Reset occurred, resetting axes")
+            frozenXAxisMin = 0
+            frozenXAxisMax = 10
+            yAxis.min = -100
+            yAxis.max = 100
+            chartView.update()
         }
     }
 
     Connections {
         target: graphController
         function onDataUpdated() {
-            console.log("Data updated in QML")
-            // Update series data
-            var vitessePoints = graphController.getVitessePoints()
-            vitesseSeries.clear()
-            for (var i = 0; i < vitessePoints.length; i++) {
-                vitesseSeries.append(vitessePoints[i].x, vitessePoints[i].y)
-            }
-            console.log("Vitesse points:", vitessePoints.length)
+            // Always update series on reset, otherwise only when running
+            if (graphController.running) {
+                console.log("Data updated in QML, updating series")
+                // Update series data
+                var vitessePoints = graphController.getVitessePoints()
+                vitesseSeries.clear()
+                for (var i = 0; i < vitessePoints.length; i++) {
+                    vitesseSeries.append(vitessePoints[i].x, vitessePoints[i].y)
+                }
+                console.log("Vitesse points:", vitessePoints.length)
 
-            var courantPoints = graphController.getCourantPoints()
-            courantSeries.clear()
-            for (i = 0; i < courantPoints.length; i++) {
-                courantSeries.append(courantPoints[i].x, courantPoints[i].y)
-            }
-            console.log("Courant points:", courantPoints.length)
+                var courantPoints = graphController.getCourantPoints()
+                courantSeries.clear()
+                for (i = 0; i < courantPoints.length; i++) {
+                    courantSeries.append(courantPoints[i].x, courantPoints[i].y)
+                }
+                console.log("Courant points:", courantPoints.length)
 
-            var wpPoints = graphController.getWpPoints()
-            wpSeries.clear()
-            for (i = 0; i < wpPoints.length; i++) {
-                wpSeries.append(wpPoints[i].x, wpPoints[i].y)
-            }
-            console.log("Wp points:", wpPoints.length)
+                var wpPoints = graphController.getWpPoints()
+                wpSeries.clear()
+                for (i = 0; i < wpPoints.length; i++) {
+                    wpSeries.append(wpPoints[i].x, wpPoints[i].y)
+                }
+                console.log("Wp points:", wpPoints.length)
 
-            // Adjust yAxis max dynamically
-            var maxValue = 100
-            if (vitessePoints.length > 0) {
-                var vitesseMax = Math.max(...vitessePoints.map(p => p.y))
-                maxValue = Math.max(maxValue, vitesseMax)
+                var negWpPoints = graphController.getNegWpPoints()
+                negWpSeries.clear()
+                for (i = 0; i < negWpPoints.length; i++) {
+                    negWpSeries.append(negWpPoints[i].x, negWpPoints[i].y)
+                }
+                console.log("NegWp points:", negWpPoints.length)
+
+                // Adjust yAxis min and max dynamically
+                var minValue = -100
+                var maxValue = 100
+                if (vitessePoints.length > 0) {
+                    var vitesseMin = Math.min(...vitessePoints.map(p => p.y))
+                    var vitesseMax = Math.max(...vitessePoints.map(p => p.y))
+                    minValue = Math.min(minValue, vitesseMin)
+                    maxValue = Math.max(maxValue, vitesseMax)
+                }
+                if (courantPoints.length > 0) {
+                    var courantMin = Math.min(...courantPoints.map(p => p.y))
+                    var courantMax = Math.max(...courantPoints.map(p => p.y))
+                    minValue = Math.min(minValue, courantMin)
+                    maxValue = Math.max(maxValue, courantMax)
+                }
+                if (wpPoints.length > 0) {
+                    var wpMin = Math.min(...wpPoints.map(p => p.y))
+                    var wpMax = Math.max(...wpPoints.map(p => p.y))
+                    minValue = Math.min(minValue, wpMin)
+                    maxValue = Math.max(maxValue, wpMax)
+                }
+                if (negWpPoints.length > 0) {
+                    var negWpMin = Math.min(...negWpPoints.map(p => p.y))
+                    var negWpMax = Math.max(...negWpPoints.map(p => p.y))
+                    minValue = Math.min(minValue, negWpMin)
+                    maxValue = Math.max(maxValue, negWpMax)
+                }
+                yAxis.min = minValue * 1.1
+                yAxis.max = maxValue * 1.1
+                console.log("yAxis.min set to:", yAxis.min, "yAxis.max set to:", yAxis.max)
+                chartView.update()
+            } else {
+                console.log("Data updated in QML, but graph is stopped, checking for reset")
+                // Update series only if triggered by reset
+                var vitessePoints = graphController.getVitessePoints()
+                if (vitessePoints.length <= 1 && vitessePoints[0]?.x === 0 && vitessePoints[0]?.y === 0) {
+                    console.log("Reset detected, updating series")
+                    vitesseSeries.clear()
+                    for (var i = 0; i < vitessePoints.length; i++) {
+                        vitesseSeries.append(vitessePoints[i].x, vitessePoints[i].y)
+                    }
+
+                    var courantPoints = graphController.getCourantPoints()
+                    courantSeries.clear()
+                    for (i = 0; i < courantPoints.length; i++) {
+                        courantSeries.append(courantPoints[i].x, courantPoints[i].y)
+                    }
+
+                    var wpPoints = graphController.getWpPoints()
+                    wpSeries.clear()
+                    for (i = 0; i < wpPoints.length; i++) {
+                        wpSeries.append(wpPoints[i].x, wpPoints[i].y)
+                    }
+
+                    var negWpPoints = graphController.getNegWpPoints()
+                    negWpSeries.clear()
+                    for (i = 0; i < negWpPoints.length; i++) {
+                        negWpSeries.append(negWpPoints[i].x, negWpPoints[i].y)
+                    }
+
+                    // Reset yAxis min and max
+                    yAxis.min = -100
+                    yAxis.max = 100
+                    chartView.update()
+                    console.log("Series reset: Vitesse points:", vitessePoints.length, "Courant points:", courantPoints.length, "Wp points:", wpPoints.length, "NegWp points:", negWpPoints.length)
+                } else {
+                    console.log("No reset, skipping series update")
+                }
             }
-            if (courantPoints.length > 0) {
-                var courantMax = Math.max(...courantPoints.map(p => p.y))
-                maxValue = Math.max(maxValue, courantMax)
-            }
-            if (wpPoints.length > 0) {
-                var wpMax = Math.max(...wpPoints.map(p => p.y))
-                maxValue = Math.max(maxValue, wpMax)
-            }
-            yAxis.max = maxValue * 1.1
-            console.log("yAxis.max set to:", yAxis.max)
-            chartView.update()
         }
     }
 
@@ -217,6 +319,8 @@ Window {
         target: mainScreen.menuBttn
         function onClicked() {
             if (mainScreen.sideMenu.x !== 0) {
+                chartView.x = 300
+                chartView.width = 1221
                 mainScreen.sideMenu.x = 0
                 mainScreen.sideMenu.opacity = 1
             }
@@ -227,6 +331,8 @@ Window {
         target: mainScreen.backMenuBttn
         function onClicked() {
             if (mainScreen.sideMenu.x === 0) {
+                chartView.x = 19
+                chartView.width = 1490
                 mainScreen.sideMenu.x = -mainScreen.sideMenu.width
                 mainScreen.sideMenu.opacity = 0
             }
@@ -245,20 +351,22 @@ Window {
         function onClicked() {
             graphController.running = !graphController.running
             mainScreen.startBttn.text = graphController.running ? qsTr("Arrêter") : qsTr("Commencer")
+            mainScreen.startBttnBackground.color = graphController.running ? "#ff6363" : "#5ee65e"
             console.log("Start button clicked, running:", graphController.running)
         }
     }
+
     Timer {
-            interval: 1000 // 1 second
-            running: true
-            repeat: true
-            onTriggered: {
-                let randomValue = (Math.random() * 100).toFixed(2);
-                let randomCourant = (Math.random() * 30).toFixed(2);
-                let randomWp = (Math.random() * 80).toFixed(2);
-                graphController.setVitesse(parseFloat(randomValue));
-                graphController.setCourant(parseFloat(randomCourant));
-                graphController.setWp(parseFloat(randomWp));
-            }
+        interval: 1000 // 1 second
+        running: true // Always run, even when graph is stopped
+        repeat: true
+        onTriggered: {
+            let randomValue = ((Math.random() * 200) - 100).toFixed(2); // -100 to 100
+            let randomCourant = ((Math.random() * 60) - 30).toFixed(2); // -30 to 30
+            let randomWp = ((Math.random() * 160) - 80).toFixed(2); // -80 to 80
+            graphController.setVitesse(parseFloat(randomValue));
+            graphController.setCourant(parseFloat(randomCourant));
+            graphController.setWp(parseFloat(randomWp));
         }
+    }
 }

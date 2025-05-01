@@ -20,7 +20,6 @@ Rectangle {
         y: 135
         width: 196
         height: 47
-        //text: qsTr("Appliquer")
         hoverEnabled: true // Enable hover effects
 
         // Text color (white)
@@ -37,7 +36,7 @@ Rectangle {
         background: Rectangle {
             id: appliqueBttnBackground
             radius: 10
-            color: "grey" // Hover turns grey, default is dark
+            color: "#c1c1c1" // Hover turns grey, default is dark
         }
     }
 
@@ -91,7 +90,7 @@ Rectangle {
         background: Rectangle {
             id: browseBttnBackground
             radius: 10
-            color: "grey" // Hover turns grey, default is dark
+            color: "#c1c1c1" // Hover turns grey, default is dark
         }
     }
 }

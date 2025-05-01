@@ -23,6 +23,7 @@ Rectangle {
     property alias aboutUsSett: aboutUsSett
     property alias startBttn: startBttn
     property alias resetGraphBttn: resetGraphBttn
+    property alias startBttnBackground: startBttnBackground
 
     id: mainPage
     width: 1550
@@ -134,15 +135,13 @@ Rectangle {
         background: Rectangle {
             id: startBttnBackground
             radius: 20
-            color: "white"
+            color: "#5ee65e"
         }
 
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.NoButton
-            onEntered: startBttnBackground.color = "grey"
-            onExited: startBttnBackground.color = "white"
         }
     }
 
@@ -177,11 +176,18 @@ Rectangle {
 
             Button {
                 id: backMenuBttn
-                text: "Retour"
-                height: 200
+                //text: "Retour"
+                Image {
+                    id: backIcon
+                    source: "Ressources/retour.png"
+                    anchors.centerIn: parent
+                    width: 100
+                    height: 100
+                    fillMode: Image.PreserveAspectFit
+                }
+                Layout.preferredHeight: 60
                 font.pointSize: 12
                 Layout.fillWidth: true
-                padding: 20
                 background: Rectangle {
                     id: backMenuBttnBackground
                     radius: 10
@@ -198,10 +204,10 @@ Rectangle {
             }
             Button {
                 id: connectSettBttn
+                Layout.preferredHeight: 60
                 text: "Paramètres de connexion"
                 font.pointSize: 12
                 Layout.fillWidth: true
-                padding: 20
                 background: Rectangle {
                     id: connectSettBttnBackground
                     radius: 10
@@ -218,10 +224,10 @@ Rectangle {
             }
             Button {
                 id: motorSettBttn
+                Layout.preferredHeight: 60
                 text: "Paramètres du moteur"
                 font.pointSize: 12
                 Layout.fillWidth: true
-                padding: 20
                 background: Rectangle {
                     id: motorSettBttnBackground
                     radius: 10
@@ -238,10 +244,10 @@ Rectangle {
             }
             Button {
                 id: saveSettBttn
+                Layout.preferredHeight: 60
                 text: "Paramètres du sauvegarde"
                 font.pointSize: 12
                 Layout.fillWidth: true
-                padding: 20
                 background: Rectangle {
                     id: saveSettBttnBackground
                     radius: 10
@@ -258,10 +264,10 @@ Rectangle {
             }
             Button {
                 id: aboutUsSett
+                Layout.preferredHeight: 60
                 text: "A propos de nous"
                 font.pointSize: 12
                 Layout.fillWidth: true
-                padding: 20
                 background: Rectangle {
                     id: aboutUsSettBackground
                     radius: 10

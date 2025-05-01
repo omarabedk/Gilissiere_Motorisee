@@ -23,17 +23,19 @@ Window {
     Connections {
         target: graphController
         function onDataUpdated() {
-            // Update TextField values with the latest from graphController
             motorSettingsForm.vitessemotInput.text = graphController.getVitesse().toFixed(2)
+            console.log("onDataUpdated VITESSE: ", graphController.getVitesse().toFixed(2))
             motorSettingsForm.courantInput.text = graphController.getCourant().toFixed(2)
+            console.log("onDataUpdated COURANT: ", graphController.getCourant().toFixed(2))
             motorSettingsForm.wpInput.text = graphController.getWp().toFixed(2)
+            console.log("onDataUpdated WP: ", graphController.getWp().toFixed(2))
         }
     }
 
     Component.onCompleted: {
-        // Initialize GraphController with default values
-        graphController.setVitesse(parseFloat(motorSettingsForm.vitessemotInput.text) || 0)
-        graphController.setCourant(parseFloat(motorSettingsForm.courantInput.text) || 0)
-        graphController.setWp(parseFloat(motorSettingsForm.wpInput.text) || 0)
+        // Initialize TextField values with current graphController values
+        motorSettingsForm.vitessemotInput.text = graphController.getVitesse().toFixed(2)
+        motorSettingsForm.courantInput.text = graphController.getCourant().toFixed(2)
+        motorSettingsForm.wpInput.text = graphController.getWp().toFixed(2)
     }
 }

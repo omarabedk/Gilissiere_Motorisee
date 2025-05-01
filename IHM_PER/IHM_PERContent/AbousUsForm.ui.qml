@@ -10,24 +10,24 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
-    width: 300
+    width: 390
     height: 150
 
     Label {
         id: label
-        x: 76
-        y: 12
+        x: 108
+        y: 8
         text: qsTr("A propos de nous")
         font.pointSize: 13
     }
 
     Label {
         id: label1
-        x: 15
-        y: 62
-        width: 271
-        height: 71
-        text: "Voici un projet réalisé par ABDEL KADER Omar \net MARCHADOUR Eugène pour un module \nintitulé « Projet Éco-Responsable » à l'ENIB."
-        font.pointSize: 10
+        x: 12
+        y: 45
+        width: 367
+        height: 90
+        text: "Voici un projet réalisé par ABDEL KADER Omar, \n MARCHADOUR Eugène et WAHBI Ahmed-Amine\n pour un module intitulé « Projet Éco-Responsable »\n à l'ENIB."
+        font.pointSize: 12
     }
 }
