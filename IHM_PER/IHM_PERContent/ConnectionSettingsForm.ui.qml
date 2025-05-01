@@ -61,7 +61,7 @@ Rectangle {
         y: 16
         text: qsTr("Paramètre du connexion")
         font.pixelSize: 20
-        font.bold: false
+        font.bold: true
     }
 
     Text {

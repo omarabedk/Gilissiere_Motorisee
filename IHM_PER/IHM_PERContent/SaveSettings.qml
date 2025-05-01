@@ -1,17 +1,32 @@
 import QtQuick
-import QtQuick 2.15
-import QtQuick.Window 2.15
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
 
 Window {
     width: 700
     height: 200
     visible: true
-    minimumWidth: width
-    maximumWidth: width
-    minimumHeight: height
-    maximumHeight: height
-    flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint
     title: "Save Settings"
-    SaveSettingsForm{
+
+    SaveSettingsForm {
+        id: saveSettingsForm
+
+        browseBttn.onClicked: {
+            fileDialog.open()
+        }
+
+        FileDialog {
+            id: fileDialog
+            title: "Select CSV File"
+            nameFilters: ["CSV files (*.csv)"]
+            fileMode: FileDialog.OpenFile
+            onAccepted: {
+                if (selectedFiles.length > 0) {
+                    var filePath = selectedFiles[0]
+                    saveSettingsForm.pathTxt.text = filePath.toString().replace(/^file:\/\//, "")
+                }
+            }
+        }
     }
 }

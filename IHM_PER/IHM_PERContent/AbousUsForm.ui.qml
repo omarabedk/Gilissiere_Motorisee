@@ -18,6 +18,7 @@ Rectangle {
         x: 108
         y: 8
         text: qsTr("A propos de nous")
+        font.bold: true
         font.pointSize: 13
     }
 

@@ -1,5 +1,4 @@
 
-
 /*
 This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
 It is supposed to be strictly declarative and only uses a subset of QML. If you edit
@@ -8,35 +7,29 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
 
 Rectangle {
-
-    //property alias button: button
+    property alias fileDialog: fileDialog
+    property alias browseBttn: browseBttn
+    property alias appliqueBttn: appliqueBttn
+    property alias pathTxt: pathTxt
     width: 700
     height: 200
+
     Button {
         id: appliqueBttn
         x: 236
         y: 135
         width: 196
         height: 47
-        hoverEnabled: true // Enable hover effects
-
-        // Text color (white)
-        contentItem: Text {
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: 15
-            font.bold: true
-            color: button.hovered ? "grey" : "#white"
-            text: "Appliquer"
-        }
-
-        // Background styling (with hover effect)
+        text: "Appliquer"
+        font.pointSize: 15
+        font.bold: true
+        palette.buttonText: hovered ? "grey" : "white"
         background: Rectangle {
-            id: appliqueBttnBackground
+            color: "#6b6b6b"
             radius: 10
-            color: "#c1c1c1" // Hover turns grey, default is dark
         }
     }
 
@@ -47,24 +40,25 @@ Rectangle {
         width: 280
         height: 37
         text: qsTr("Paramètres de sauvegarde")
+        font.bold: true
         font.pointSize: 17
     }
 
     Label {
         id: label1
-        x: 27
-        y: 86
+        x: 16
+        y: 82
         text: qsTr("Chemin vers CSV")
         font.pointSize: 14
     }
 
-    TextEdit {
+    TextField {
         id: pathTxt
-        x: 160
-        y: 79
+        x: 170
+        y: 85
         width: 453
-        height: 38
-        font.pixelSize: 12
+        height: 24
+        font.pixelSize: 14
     }
 
     Button {
@@ -73,24 +67,20 @@ Rectangle {
         y: 79
         width: 38
         height: 33
-        //text: qsTr("Appliquer")
-        hoverEnabled: true // Enable hover effects
-
-        // Text color (white)
-        contentItem: Text {
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: 11
-            font.bold: true
-            color: button.hovered ? "grey" : "#white"
-            text: "..."
-        }
-
-        // Background styling (with hover effect)
+        text: "..."
+        font.pointSize: 11
+        font.bold: true
+        palette.buttonText: hovered ? "grey" : "white"
         background: Rectangle {
-            id: browseBttnBackground
+            color: "#6b6b6b"
             radius: 10
-            color: "#c1c1c1" // Hover turns grey, default is dark
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Select CSV File"
+        nameFilters: ["CSV files (*.csv)", "All files (*)"]
+        fileMode: FileDialog.OpenFile
     }
 }

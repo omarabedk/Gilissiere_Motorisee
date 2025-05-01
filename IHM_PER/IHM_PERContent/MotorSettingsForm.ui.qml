@@ -16,9 +16,10 @@ Rectangle {
         id: label
         x: 55
         y: 8
-        width: 170
+        width: 178
         height: 28
         text: qsTr("Paramètres du moteur")
+        font.bold: true
         font.pointSize: 13
     }
 
@@ -32,7 +33,7 @@ Rectangle {
 
     Label {
         id: label2
-        x: 217
+        x: 234
         y: 50
         text: qsTr("tr/min")
         font.pointSize: 10
@@ -48,7 +49,7 @@ Rectangle {
 
     Label {
         id: label4
-        x: 217
+        x: 233
         y: 81
         text: qsTr("A")
         font.pointSize: 10
@@ -64,7 +65,7 @@ Rectangle {
 
     Label {
         id: label6
-        x: 111
+        x: 133
         y: 114
         text: qsTr("s")
         font.pointSize: 10
@@ -80,7 +81,7 @@ Rectangle {
 
     Label {
         id: label8
-        x: 111
+        x: 133
         y: 145
         text: qsTr("s")
         font.pointSize: 10
@@ -97,15 +98,15 @@ Rectangle {
     Label {
         id: label10
         x: 23
-        y: 213
+        y: 211
         text: qsTr("Wp :")
         font.pointSize: 10
     }
 
     Label {
         id: label11
-        x: 106
-        y: 213
+        x: 145
+        y: 211
         text: qsTr("tr/min")
         font.pointSize: 10
     }
@@ -120,7 +121,7 @@ Rectangle {
 
     Label {
         id: label13
-        x: 106
+        x: 138
         y: 283
         text: qsTr("m")
         font.pointSize: 10
@@ -136,7 +137,7 @@ Rectangle {
 
     Label {
         id: label15
-        x: 123
+        x: 143
         y: 321
         text: qsTr("m")
         font.pointSize: 10
@@ -152,7 +153,7 @@ Rectangle {
 
     Label {
         id: label17
-        x: 123
+        x: 157
         y: 245
         text: qsTr("m")
         font.pointSize: 10
@@ -162,7 +163,7 @@ Rectangle {
         id: vitessemotInput
         x: 140
         y: 50
-        width: 71
+        width: 88
         height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
@@ -177,7 +178,7 @@ Rectangle {
         id: courantInput
         x: 149
         y: 81
-        width: 60
+        width: 79
         height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
@@ -191,9 +192,9 @@ Rectangle {
     TextField {
         id: t1Label
         x: 52
-        y: 116
-        width: 50
-        height: 16
+        y: 115
+        width: 75
+        height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
         validator: DoubleValidator {
@@ -206,9 +207,9 @@ Rectangle {
     TextField {
         id: t2Label
         x: 52
-        y: 147
-        width: 50
-        height: 16
+        y: 146
+        width: 73
+        height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
         validator: DoubleValidator {
@@ -222,8 +223,8 @@ Rectangle {
         id: penteLabel
         x: 52
         y: 179
-        width: 50
-        height: 16
+        width: 73
+        height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
         validator: DoubleValidator {
@@ -236,8 +237,8 @@ Rectangle {
     TextField {
         id: wpInput
         x: 55
-        y: 213
-        width: 47
+        y: 212
+        width: 84
         height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
@@ -251,9 +252,9 @@ Rectangle {
     TextField {
         id: cmaxLabel
         x: 67
-        y: 247
-        width: 50
-        height: 16
+        y: 246
+        width: 85
+        height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
         validator: DoubleValidator {
@@ -267,8 +268,8 @@ Rectangle {
         id: cpLabel
         x: 52
         y: 285
-        width: 50
-        height: 16
+        width: 82
+        height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
         validator: DoubleValidator {
@@ -281,9 +282,9 @@ Rectangle {
     TextField {
         id: xmaxLabel
         x: 67
-        y: 323
-        width: 50
-        height: 16
+        y: 322
+        width: 72
+        height: 20
         horizontalAlignment: Text.AlignHCenter
         readOnly: true
         validator: DoubleValidator {
