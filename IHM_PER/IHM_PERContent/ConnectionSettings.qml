@@ -20,8 +20,8 @@ Window {
     Connections {
         target: connectionHandler
         function onConnectionStatusChanged(isConnected) {
-            form.connectBttn.text = isConnected ? qsTr("Disconnect") : qsTr("Connect")
-            form.buttonBackground.color = isConnected ? "green" : "grey"
+            form.connectBttn.text = isConnected ? qsTr("Déconnexion") : qsTr("Connecxion")
+            form.buttonBackground.color = isConnected ? "red" : "green"
         }
 
         function onErrorOccurred(message) {
@@ -33,7 +33,6 @@ Window {
     Connections {
         target: form.connectBttn
         onClicked: {
-            form.buttonBackground.color = "green"
             var ipParts = [form.ipAdd1Spinbx.value, form.ipAdd2Spinbx.value,
                            form.ipAdd3Spinbx.value, form.ipAdd4Spinbx.value]
             var portNumber = form.portSpinbx.value

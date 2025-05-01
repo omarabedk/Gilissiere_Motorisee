@@ -1,5 +1,4 @@
 
-
 /*
 This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
 It is supposed to be strictly declarative and only uses a subset of QML. If you edit
@@ -12,11 +11,18 @@ import QtQuick.Layouts 1.3
 import IHM_PER_Data
 import IHM_PER_Design
 import QtQuick.Timeline 1.0
+import QtCharts 2.9
 
 Rectangle {
     property alias menuBttn: menuBttn
     property alias sideMenu: sideMenu
     property alias backMenuBttn: backMenuBttn
+    property alias connectSettBttn: connectSettBttn
+    property alias motorSettBttn: motorSettBttn
+    property alias saveSettBttn: saveSettBttn
+    property alias aboutUsSett: aboutUsSett
+    property alias startBttn: startBttn
+    property alias resetGraphBttn: resetGraphBttn
 
     id: mainPage
     width: 1550
@@ -71,21 +77,21 @@ Rectangle {
         height: 63
         text: qsTr("Réinitialisation des graphs")
         font.bold: true
-        font.pointSize: 22
+        font.pointSize: 20
         background: Rectangle {
-            id: resetGraphBttnBackground // Give the background an ID
+            id: resetGraphBttnBackground
             radius: 20
-            color: "white" // Default color
+            color: "white"
         }
 
         MouseArea {
             anchors.fill: parent
             anchors.leftMargin: 0
             anchors.bottomMargin: 0
-            hoverEnabled: true // Enable hover support for the MouseArea
+            hoverEnabled: true
             acceptedButtons: Qt.NoButton
-            onEntered: resetGraphBttnBackground.color = "grey" // Change color on hover
-            onExited: resetGraphBttnBackground.color = "white" // Reset color on exit
+            onEntered: resetGraphBttnBackground.color = "grey"
+            onExited: resetGraphBttnBackground.color = "white"
         }
     }
 
@@ -99,20 +105,20 @@ Rectangle {
         icon.source: "Ressources/MenuBttn.png"
         icon.cache: true
         font.pointSize: 15
-        hoverEnabled: true // Enable hover support for the button
+        hoverEnabled: true
 
         background: Rectangle {
-            id: menuBttnBackground // Give the background an ID
+            id: menuBttnBackground
             radius: 20
-            color: "white" // Default color
+            color: "white"
         }
 
         MouseArea {
             anchors.fill: parent
-            hoverEnabled: true // Enable hover support for the MouseArea
+            hoverEnabled: true
             acceptedButtons: Qt.NoButton
-            onEntered: menuBttnBackground.color = "grey" // Change color on hover
-            onExited: menuBttnBackground.color = "white" // Reset color on exit
+            onEntered: menuBttnBackground.color = "grey"
+            onExited: menuBttnBackground.color = "white"
         }
     }
 
@@ -122,21 +128,21 @@ Rectangle {
         y: 133
         width: 299
         height: 63
-        text: qsTr("Commencer/Arreter")
+        text: qsTr("Commencer")
         font.bold: true
-        font.pointSize: 22
+        font.pointSize: 20
         background: Rectangle {
-            id: startBttnBackground // Give the background an ID
+            id: startBttnBackground
             radius: 20
-            color: "white" // Default color
+            color: "white"
         }
 
         MouseArea {
             anchors.fill: parent
-            hoverEnabled: true // Enable hover support for the MouseArea
+            hoverEnabled: true
             acceptedButtons: Qt.NoButton
-            onEntered: startBttnBackground.color = "grey" // Change color on hover
-            onExited: startBttnBackground.color = "white" // Reset color on exit
+            onEntered: startBttnBackground.color = "grey"
+            onExited: startBttnBackground.color = "white"
         }
     }
 
@@ -164,7 +170,6 @@ Rectangle {
 
         ColumnLayout {
             anchors.fill: parent
-
             anchors.topMargin: 0
             z: 0
             scale: 1
@@ -178,17 +183,17 @@ Rectangle {
                 Layout.fillWidth: true
                 padding: 20
                 background: Rectangle {
-                    id: backMenuBttnBackground // Give the background an ID
+                    id: backMenuBttnBackground
                     radius: 10
-                    color: "white" // Default color
+                    color: "white"
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true // Enable hover support for the MouseArea
+                    hoverEnabled: true
                     acceptedButtons: Qt.NoButton
-                    onEntered: backMenuBttnBackground.color = "grey" // Change color on hover
-                    onExited: backMenuBttnBackground.color = "white" // Reset color on exit
+                    onEntered: backMenuBttnBackground.color = "grey"
+                    onExited: backMenuBttnBackground.color = "white"
                 }
             }
             Button {
@@ -198,17 +203,17 @@ Rectangle {
                 Layout.fillWidth: true
                 padding: 20
                 background: Rectangle {
-                    id: connectSettBttnBackground // Give the background an ID
+                    id: connectSettBttnBackground
                     radius: 10
-                    color: "white" // Default color
+                    color: "white"
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true // Enable hover support for the MouseArea
+                    hoverEnabled: true
                     acceptedButtons: Qt.NoButton
-                    onEntered: connectSettBttnBackground.color = "grey" // Change color on hover
-                    onExited: connectSettBttnBackground.color = "white" // Reset color on exit
+                    onEntered: connectSettBttnBackground.color = "grey"
+                    onExited: connectSettBttnBackground.color = "white"
                 }
             }
             Button {
@@ -218,17 +223,17 @@ Rectangle {
                 Layout.fillWidth: true
                 padding: 20
                 background: Rectangle {
-                    id: motorSettBttnBackground // Give the background an ID
+                    id: motorSettBttnBackground
                     radius: 10
-                    color: "white" // Default color
+                    color: "white"
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true // Enable hover support for the MouseArea
+                    hoverEnabled: true
                     acceptedButtons: Qt.NoButton
-                    onEntered: motorSettBttnBackground.color = "grey" // Change color on hover
-                    onExited: motorSettBttnBackground.color = "white" // Reset color on exit
+                    onEntered: motorSettBttnBackground.color = "grey"
+                    onExited: motorSettBttnBackground.color = "white"
                 }
             }
             Button {
@@ -238,17 +243,17 @@ Rectangle {
                 Layout.fillWidth: true
                 padding: 20
                 background: Rectangle {
-                    id: saveSettBttnBackground // Give the background an ID
+                    id: saveSettBttnBackground
                     radius: 10
-                    color: "white" // Default color
+                    color: "white"
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true // Enable hover support for the MouseArea
+                    hoverEnabled: true
                     acceptedButtons: Qt.NoButton
-                    onEntered: saveSettBttnBackground.color = "grey" // Change color on hover
-                    onExited: saveSettBttnBackground.color = "white" // Reset color on exit
+                    onEntered: saveSettBttnBackground.color = "grey"
+                    onExited: saveSettBttnBackground.color = "white"
                 }
             }
             Button {
@@ -258,17 +263,17 @@ Rectangle {
                 Layout.fillWidth: true
                 padding: 20
                 background: Rectangle {
-                    id: aboutUsSettBackground // Give the background an ID
+                    id: aboutUsSettBackground
                     radius: 10
-                    color: "white" // Default color
+                    color: "white"
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true // Enable hover support for the MouseArea
+                    hoverEnabled: true
                     acceptedButtons: Qt.NoButton
-                    onEntered: aboutUsSettBackground.color = "grey" // Change color on hover
-                    onExited: aboutUsSettBackground.color = "white" // Reset color on exit
+                    onEntered: aboutUsSettBackground.color = "grey"
+                    onExited: aboutUsSettBackground.color = "white"
                 }
             }
             Text {
@@ -278,122 +283,6 @@ Rectangle {
                 width: 137
                 height: 27
                 color: "#ffffff"
-            }
-        }
-    }
-
-    Connections {
-        target: connectSettBttn
-
-        property var connectionSettingsWindow
-
-        // Track the window instance
-        function onClicked() {
-            if (!connectionSettingsWindow) {
-                // Check if already open
-                var component = Qt.createComponent("ConnectionSettings.qml")
-                if (component.status === Component.Ready) {
-                    connectionSettingsWindow = component.createObject(parent)
-                    connectionSettingsWindow.show()
-
-                    // Handle window closing
-                    connectionSettingsWindow.closing.connect(function () {
-                        connectionSettingsWindow.destroy()
-                        connectionSettingsWindow = null // Reset reference when closed
-                    })
-                } else {
-                    console.log("Erreur de chargement du ConnectionSettings.qml")
-                }
-            } else {
-                // Bring the existing window to the front
-                connectionSettingsWindow.requestActivate()
-            }
-        }
-    }
-
-    Connections {
-        target: motorSettBttn
-
-        property var motorSettingsWindow
-
-        // Track the window instance
-        function onClicked() {
-            if (!motorSettingsWindow) {
-                // Check if already open
-                var component = Qt.createComponent("MotorSettings.qml")
-                if (component.status === Component.Ready) {
-                    motorSettingsWindow = component.createObject(parent)
-                    motorSettingsWindow.show()
-
-                    // Handle window closing
-                    motorSettingsWindow.closing.connect(function () {
-                        motorSettingsWindow.destroy()
-                        motorSettingsWindow = null // Reset reference when closed
-                    })
-                } else {
-                    console.log("Erreur de chargement du MotorSettings.qml")
-                }
-            } else {
-                // Bring the existing window to the front
-                motorSettingsWindow.requestActivate()
-            }
-        }
-    }
-
-    Connections {
-        target: saveSettBttn
-
-        property var saveSettingsWindow
-
-        // Track the window instance
-        function onClicked() {
-            if (!saveSettingsWindow) {
-                // Check if already open
-                var component = Qt.createComponent("SaveSettings.qml")
-                if (component.status === Component.Ready) {
-                    saveSettingsWindow = component.createObject(parent)
-                    saveSettingsWindow.show()
-
-                    // Handle window closing
-                    saveSettingsWindow.closing.connect(function () {
-                        saveSettingsWindow.destroy()
-                        saveSettingsWindow = null // Reset reference when closed
-                    })
-                } else {
-                    console.log("Erreur de chargement du SaveSettings.qml")
-                }
-            } else {
-                // Bring the existing window to the front
-                saveSettingsWindow.requestActivate()
-            }
-        }
-    }
-
-    Connections {
-        target: aboutUsSett
-
-        property var aboutUsWindow
-
-        // Track the window instance
-        function onClicked() {
-            if (!aboutUsWindow) {
-                // Check if already open
-                var component = Qt.createComponent("AboutUs.qml")
-                if (component.status === Component.Ready) {
-                    aboutUsWindow = component.createObject(parent)
-                    aboutUsWindow.show()
-
-                    // Handle window closing
-                    aboutUsWindow.closing.connect(function () {
-                        aboutUsWindow.destroy()
-                        aboutUsWindow = null // Reset reference when closed
-                    })
-                } else {
-                    console.log("Erreur de chargement du AboutUs.qml")
-                }
-            } else {
-                // Bring the existing window to the front
-                aboutUsWindow.requestActivate()
             }
         }
     }

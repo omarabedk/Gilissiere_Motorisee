@@ -1,11 +1,3 @@
-
-
-/*
-This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
-It is supposed to be strictly declarative and only uses a subset of QML. If you edit
-this file manually, you might introduce QML code that is not supported by Qt Design Studio.
-Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
-*/
 import QtQuick
 import QtQuick.Controls
 
@@ -16,6 +8,9 @@ Rectangle {
     width: 280
     height: 360
     color: "#ffffff"
+    property alias vitessemotInput: vitessemotInput
+    property alias courantInput: courantInput
+    property alias wpInput: wpInput
 
     Label {
         id: label
@@ -163,75 +158,138 @@ Rectangle {
         font.pointSize: 10
     }
 
-    Label {
-        id: vitessemotLabel
+    TextField {
+        id: vitessemotInput
         x: 140
-        y: 52
+        y: 50
         width: 71
-        height: 16
+        height: 20
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
-        id: courantLabel
+    TextField {
+        id: courantInput
         x: 149
         y: 81
         width: 60
-        height: 18
+        height: 20
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
+    TextField {
         id: t1Label
         x: 52
         y: 116
         width: 50
         height: 16
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
+    TextField {
         id: t2Label
         x: 52
         y: 147
         width: 50
         height: 16
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
+    TextField {
         id: penteLabel
         x: 52
         y: 179
         width: 50
         height: 16
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
-        id: wpLabel
+    TextField {
+        id: wpInput
         x: 55
-        y: 215
+        y: 213
         width: 47
-        height: 16
+        height: 20
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
+    TextField {
         id: cmaxLabel
         x: 67
         y: 247
         width: 50
         height: 16
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
+    TextField {
         id: cpLabel
         x: 52
         y: 285
         width: 50
         height: 16
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 
-    Label {
+    TextField {
         id: xmaxLabel
         x: 67
         y: 323
         width: 50
         height: 16
+        horizontalAlignment: Text.AlignHCenter
+        readOnly: true
+        validator: DoubleValidator {
+            bottom: 0
+            top: 100
+            decimals: 2
+        }
     }
 }

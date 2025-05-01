@@ -13,14 +13,13 @@ Rectangle {
     property alias connectBttn: connectBttn
     property alias buttonBackground: buttonBackground
 
-
-    /*property alias ipAdd1Spinbx: ipAdd1Spinbx
+    property alias ipAdd1Spinbx: ipAdd1Spinbx
     property alias ipAdd2Spinbx: ipAdd2Spinbx
     property alias ipAdd3Spinbx: ipAdd3Spinbx
     property alias ipAdd4Spinbx: ipAdd4Spinbx
     property alias portSpinbx: portSpinbx
     property alias serverAddSpinbx: serverAddSpinbx
-    property alias errorPopup: errorPopup*/
+
     id: rectangle
     x: 0
     y: 0
@@ -43,8 +42,8 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.pointSize: 15
             font.bold: true
-            color: connectBttn.hovered ? "grey" : "#white"
-            text: connectionHandler.is_connected ? qsTr("Diconnexion") : qsTr(
+            color: connectBttn.hovered ? "grey" : "white"
+            text: connectionHandler.is_connected ? qsTr("Déconnexion") : qsTr(
                                                        "Connexion")
         }
 
@@ -52,7 +51,7 @@ Rectangle {
         background: Rectangle {
             id: buttonBackground
             radius: 10
-            color: "grey" // Hover turns grey, default is dark
+            color: connectionHandler.is_connected ? "red" : "green"
         }
     }
 
@@ -187,38 +186,6 @@ Rectangle {
         editable: true
     }
 
-
-    /* Connections {
-        target: connectBttn
-        onClicked: {
-            buttonBackground.color = "green"
-            // Create a proper JS array of numbers (not QML objects)
-            var ipParts = [Number(ipAdd1Spinbx.value), Number(
-                               ipAdd2Spinbx.value), Number(
-                               ipAdd3Spinbx.value), Number(ipAdd4Spinbx.value)]
-
-            // Convert all values to proper numbers
-            var portNumber = Number(portSpinbx.value)
-            var serverAddressNumber = Number(serverAddSpinbx.value)
-
-            // Call the Python method with explicit number types
-            connectionHandler.connect_button_clicked(ipParts, portNumber,
-                                                     serverAddressNumber)
-        }
-    }
-
-    Connections {
-        target: connectionHandler
-        function onConnectionStatusChanged(isConnected) {
-            connectBttn.text = isConnected ? qsTr("Disconnect") : qsTr(
-                                                 "Connect")
-            buttonBackground.color = isConnected ? "green" : "grey"
-        }
-        function onErrorOccurred(message) {
-            errorPopup.text = message
-            errorPopup.open()
-        }
-    }*/
     Popup {
         id: errorPopup
         x: 100

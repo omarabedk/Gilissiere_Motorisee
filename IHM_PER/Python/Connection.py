@@ -1,5 +1,5 @@
 from PySide6.QtCore import QObject, QTimer, Signal, Slot, Property
-from PySide6.QtSerialBus import QModbusTcpClient, QModbusDevice, QModbusDataUnit, QModbusReply
+from PySide6.QtSerialBus import QModbusTcpClient, QModbusDevice, QModbusDataUnit
 
 
 class ConnectionHandler(QObject):
