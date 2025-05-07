@@ -12,13 +12,9 @@ class GraphController(QObject):
         
         # Initialize data series
         self._series1 = QLineSeries()
-        self._series1.setName("Vitesse du moteur")
         self._series2 = QLineSeries()
-        self._series2.setName("Courant du moteur")
         self._threshold = QLineSeries()
-        self._threshold.setName("Wp")
         self._negThreshold = QLineSeries()
-        self._negThreshold.setName("-Wp")
         
         # Initialize data points
         self._max_points = 100  # Number of points to display
@@ -34,9 +30,6 @@ class GraphController(QObject):
         self._points2 = []
         
         # Motor settings
-        self._vitesse = 25  # Default values
-        self._courant = 5
-        self._wp = 30
         self._running = False  # Graph update state
 
         # Emit signal to indicate series are ready

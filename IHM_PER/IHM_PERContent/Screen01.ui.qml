@@ -176,13 +176,12 @@ Rectangle {
 
             Button {
                 id: backMenuBttn
-                //text: "Retour"
                 Image {
                     id: backIcon
                     source: "Ressources/retour.png"
                     anchors.centerIn: parent
-                    width: 100
-                    height: 100
+                    width: 60
+                    height: 60
                     fillMode: Image.PreserveAspectFit
                 }
                 Layout.preferredHeight: 60
@@ -206,7 +205,7 @@ Rectangle {
                 id: connectSettBttn
                 Layout.preferredHeight: 60
                 text: "Paramètres de connexion"
-                font.pointSize: 12
+                font.pointSize: 14
                 Layout.fillWidth: true
                 background: Rectangle {
                     id: connectSettBttnBackground
@@ -226,7 +225,7 @@ Rectangle {
                 id: motorSettBttn
                 Layout.preferredHeight: 60
                 text: "Paramètres du moteur"
-                font.pointSize: 12
+                font.pointSize: 14
                 Layout.fillWidth: true
                 background: Rectangle {
                     id: motorSettBttnBackground
@@ -246,7 +245,7 @@ Rectangle {
                 id: saveSettBttn
                 Layout.preferredHeight: 60
                 text: "Paramètres du sauvegarde"
-                font.pointSize: 12
+                font.pointSize: 14
                 Layout.fillWidth: true
                 background: Rectangle {
                     id: saveSettBttnBackground
@@ -266,7 +265,7 @@ Rectangle {
                 id: aboutUsSett
                 Layout.preferredHeight: 60
                 text: "A propos de nous"
-                font.pointSize: 12
+                font.pointSize: 14
                 Layout.fillWidth: true
                 background: Rectangle {
                     id: aboutUsSettBackground
