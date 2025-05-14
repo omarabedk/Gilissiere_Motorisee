@@ -361,11 +361,7 @@ Window {
         running: true // Always run, even when graph is stopped
         repeat: true
         onTriggered: {
-            let randomValue = ((Math.random() * 200) - 100).toFixed(2); // -100 to 100
-            let randomCourant = ((Math.random() * 60) - 30).toFixed(2); // -30 to 30
             let randomWp = ((Math.random() * 160) - 80).toFixed(2); // -80 to 80
-            graphController.setVitesse(parseFloat(randomValue));
-            graphController.setCourant(parseFloat(randomCourant));
             graphController.setWp(parseFloat(randomWp));
         }
     }

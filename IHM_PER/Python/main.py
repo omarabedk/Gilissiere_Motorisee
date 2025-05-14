@@ -29,6 +29,11 @@ if __name__ == '__main__':
     # Create and expose graph controller to QML
     graph_controller = GraphController()
     engine.rootContext().setContextProperty("graphController", graph_controller)
+
+    # Connect vitesseReel updates to graph controller
+    connection_handler.vitesseReelUpdated.connect(graph_controller.setVitesse)
+    # Connect courantReel updates to graph controller
+    connection_handler.courantReelUpdated.connect(graph_controller.setCourant)
     
     engine.addImportPath(os.fspath(app_dir))
     for path in import_paths:
