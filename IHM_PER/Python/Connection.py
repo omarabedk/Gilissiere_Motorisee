@@ -29,8 +29,10 @@ class ConnectionHandler(QObject):
     @Slot(list, int, int)
     def connect_button_clicked(self, ip_parts, port, server_address):
         self._server_address = server_address
-        ip_parts_clean = [str(int(float(p))) for p in ip_parts[:4]]  # force only 4, and clean them up
+        ip_parts_clean = [str(int(float(p))) for p in ip_parts[:4]]
         ip_address = ".".join(ip_parts_clean)
+        
+        print(f"[PY] connect_button_clicked called with IP: {ip_address}, Port: {port}, Server: {server_address}")
         
         if self._modbus_device.state() == QModbusDevice.ConnectedState:
             print("[PY] Disconnecting from Modbus...")
@@ -44,8 +46,8 @@ class ConnectionHandler(QObject):
         self._modbus_device.setNumberOfRetries(5)
 
         if not self._modbus_device.connectDevice():
+            print("[PY] Emitting error: Failed to initiate connection.")
             self.errorOccurred.emit("Failed to initiate connection.")
-            print("[PY] connectDevice() failed to initiate.")
         else:
             print("[PY] connectDevice() initiated.")
 
@@ -77,7 +79,7 @@ class ConnectionHandler(QObject):
             print("[PY] Not connected, skipping read.")
             return
 
-        # Read 2 registers starting at address 1 (vitesseReel)
+        # Read vitesseReel values
         vitesse = QModbusDataUnit(QModbusDataUnit.HoldingRegisters, 1, 2)
         replyVitesse = self._modbus_device.sendReadRequest(vitesse, self._server_address)
         if not replyVitesse:

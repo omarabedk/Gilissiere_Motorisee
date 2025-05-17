@@ -188,17 +188,27 @@ Rectangle {
 
     Popup {
         id: errorPopup
-        x: 100
-        y: 100
-        width: 300
-        height: 150
+        x: (parent.width - width) / 2 // Center horizontally
+        y: (parent.height - height) / 2 // Center vertically
+        width: 150
+        height: 50
         modal: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
+        background: Rectangle {
+            color: "#f0f0f0"
+            border.color: "#000000"
+            border.width: 1
+            radius: 5
+        }
+
         Label {
             id: errorLabel
-            anchors.fill: parent
+            anchors.centerIn: parent // Center the label in the popup
+            width: parent.width - 20 // Add padding
             wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
             text: "Error"
         }
 
