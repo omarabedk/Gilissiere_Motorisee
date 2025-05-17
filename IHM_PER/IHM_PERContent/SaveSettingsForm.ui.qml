@@ -58,7 +58,7 @@ Rectangle {
         y: 85
         width: 453
         height: 24
-        text: "C:\\Users\\omara\\Desktop\\My Documents\\ENIB\\ENIB-S9\\PER\\IHM_PER\\f.csv"
+        text: "C:\\Book1.csv"
         font.pixelSize: 14
     }
 

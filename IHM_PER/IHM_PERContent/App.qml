@@ -17,8 +17,15 @@ Window {
     property real frozenXAxisMin: 0
     property real frozenXAxisMax: 10
 
+    Component.onCompleted: {
+        console.log("Main window loaded — calling apply_button_clicked")
+        saveCSV.apply_button_clicked()
+    }
+
+
     Screen01 {
         id: mainScreen
+
 
         ChartView {
             id: chartView
@@ -350,6 +357,7 @@ Window {
         target: mainScreen.startBttn
         function onClicked() {
             graphController.running = !graphController.running
+            SaveCSV.toggle_pause()
             mainScreen.startBttn.text = graphController.running ? qsTr("Arrêter") : qsTr("Commencer")
             mainScreen.startBttnBackground.color = graphController.running ? "#ff6363" : "#5ee65e"
             console.log("Start button clicked, running:", graphController.running)
