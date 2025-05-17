@@ -12,8 +12,13 @@ Window {
     SaveSettingsForm {
         id: saveSettingsForm
 
+        Component.onCompleted: {
+            console.log("SaveSettingsForm loaded, SaveCSV available:", SaveCSV);
+        }
+
         browseBttn.onClicked: {
-            fileDialog.open()
+            console.log("Browse button clicked, opening FileDialog");
+            fileDialog.open();
         }
 
         FileDialog {
@@ -23,9 +28,18 @@ Window {
             fileMode: FileDialog.OpenFile
             onAccepted: {
                 if (selectedFiles.length > 0) {
-                    var filePath = selectedFiles[0]
-                    saveSettingsForm.pathTxt.text = filePath.toString().replace(/^file:\/\//, "")
+                    var filePath = selectedFiles[0];
+                    saveSettingsForm.pathTxt.text = filePath.toString().replace(/^file:\/\//, "");
+                    console.log("File selected, path set to:", saveSettingsForm.pathTxt.text);
                 }
+            }
+        }
+
+        Connections {
+            target: saveSettingsForm.appliqueBttn
+            function onClicked() {
+                console.log("Applique button clicked, calling SaveCSV.apply_button_clicked with path:", saveSettingsForm.pathTxt.text);
+                SaveCSV.apply_button_clicked(saveSettingsForm.pathTxt.text);
             }
         }
     }

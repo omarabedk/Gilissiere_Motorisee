@@ -88,7 +88,8 @@ class ConnectionHandler(QObject):
             replyVitesse.finished.connect(lambda: self._handle_read_reply(replyVitesse, self.vitesseReelUpdated))
         else:
             replyVitesse.deleteLater()
-
+            
+        # Read curant values
         courant = QModbusDataUnit(QModbusDataUnit.HoldingRegisters, 3, 2)
         replyCourant = self._modbus_device.sendReadRequest(courant, self._server_address)
         if not replyCourant:
