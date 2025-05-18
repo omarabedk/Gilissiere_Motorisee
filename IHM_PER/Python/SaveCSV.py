@@ -33,6 +33,7 @@ class SaveCSV(QObject):
         self.timer.timeout.connect(self.update_csv_realtime)
         self.timer.setInterval(1000)  # 1 second
 
+
     def generate_random_values(self):
         """Generate dynamic values and update modification times where appropriate."""
         self.vitesse = random.randint(70, 100)

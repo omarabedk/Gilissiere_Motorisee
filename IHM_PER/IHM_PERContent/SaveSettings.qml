@@ -40,7 +40,7 @@ Window {
                     target: saveSettingsForm.pathTxt
                     Component.onCompleted: {
                         // Use SaveCSV to read path.txt
-                        var path = SaveCSV.read_file("./path.txt");
+                        var path = SaveCSV.read_file("path.txt");
                         if (path) {
                             saveSettingsForm.pathTxt.text = path;
                             console.log("Path loaded from path.txt:", path);
