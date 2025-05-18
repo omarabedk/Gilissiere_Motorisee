@@ -35,22 +35,48 @@ Window {
             }
         }
 
-        Connections {
-            target: saveSettingsForm.appliqueBttn
-            function onClicked() {
-                var path = saveSettingsForm.pathTxt.text;
-                console.log("Applique button clicked with path:", path);
 
-                if (path && path.toLowerCase().endsWith(".csv")) {
-                    SaveCSV.apply_button_clicked(path);
-                    successDialog.text = "Path applied: " + path;
-                    successDialog.open();
-                } else {
-                    errorDialog.text = "Please enter a valid CSV file path (must end with .csv)";
-                    errorDialog.open();
+        Connections {
+                    target: saveSettingsForm.pathTxt
+                    Component.onCompleted: {
+                        // Use SaveCSV to read path.txt
+                        var path = SaveCSV.read_file("./path.txt");
+                        if (path) {
+                            saveSettingsForm.pathTxt.text = path;
+                            console.log("Path loaded from path.txt:", path);
+                        } else {
+                            console.log("Failed to read path.txt");
+                        }
+                    }
                 }
-            }
-        }
+
+        Connections {
+                    target: saveSettingsForm.appliqueBttn
+                    function onClicked() {
+                        var path = saveSettingsForm.pathTxt.text;
+                        console.log("Applique button clicked with path:", path);
+
+                        if (path && path.toLowerCase().endsWith(".csv")) {
+                            // Write the path to path.txt
+                            var writeSuccess = SaveCSV.write_path_file("path.txt", path);
+                            if (writeSuccess) {
+                                console.log("Successfully wrote path to path.txt:", path);
+                            } else {
+                                console.log("Failed to write path to path.txt");
+                                errorDialog.text = "Failed to save path to path.txt";
+                                errorDialog.open();
+                                return;
+                            }
+                            // Apply the path
+                            SaveCSV.apply_button_clicked(path);
+                            successDialog.text = "Path applied: " + path;
+                            successDialog.open();
+                        } else {
+                            errorDialog.text = "Please enter a valid CSV file path (must end with .csv)";
+                            errorDialog.open();
+                        }
+                    }
+                }
     }
 
     Dialog {

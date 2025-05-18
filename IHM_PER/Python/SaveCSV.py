@@ -68,6 +68,52 @@ class SaveCSV(QObject):
         state = "paused" if self.paused else "resumed"
         print(f"CSV updating has been {state}.")
 
+    @Slot(str, result=str)
+    def read_file(self, file_path):
+        """Read the contents of a file and return as a string. Create path.txt with Book.csv path if it doesn't exist."""
+        try:
+            # Check if the file exists
+            if not os.path.exists(file_path):
+                print(f"File {file_path} does not exist, creating it with path to Book.csv")
+                # Get the directory of file_path (path.txt)
+                directory = os.path.dirname(file_path) or '.'  # Use current dir if no dirname
+                # Construct the path to Book.csv in the same directory
+                book_csv_path = os.path.normpath(os.path.join(directory, "C:\Book.csv"))
+                # Create the directory if it doesn't exist
+                os.makedirs(directory, exist_ok=True)
+                # Create path.txt and write the Book.csv path
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.write(book_csv_path)
+                    print(f"Created {file_path} with content: {book_csv_path}")
+
+            # Read the contents of path.txt
+            with open(file_path, 'r', encoding='utf-8') as file:
+                content = file.read().strip()
+                print(f"Read file {file_path}: {content}")
+                return content
+
+        except Exception as e:
+            print(f"Error processing file {file_path}: {type(e).__name__} {e}")
+            return ""
+        
+
+    @Slot(str, str, result=bool)
+    def write_path_file(self, file_path, content):
+        """Write the given content to the specified file and return success status."""
+        try:
+            # Get the directory of file_path
+            directory = os.path.dirname(file_path) or '.'  # Use current dir if no dirname
+            # Create the directory if it doesn't exist
+            os.makedirs(directory, exist_ok=True)
+            # Write content to file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(content.strip())
+                print(f"Wrote to {file_path}: {content}")
+                return True
+        except Exception as e:
+            print(f"Error writing to file {file_path}: {type(e).__name__} {e}")
+            return False
+
 
     def update_csv_realtime(self):
         if not self.path:

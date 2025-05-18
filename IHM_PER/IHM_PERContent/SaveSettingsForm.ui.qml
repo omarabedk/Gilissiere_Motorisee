@@ -58,7 +58,6 @@ Rectangle {
         y: 85
         width: 453
         height: 24
-        text: "C:\\Book1.csv"
         font.pixelSize: 14
     }
 
