@@ -6,6 +6,7 @@ class GraphController(QObject):
     runningChanged = Signal()    # Signal for running state changes
     dataUpdated = Signal()       # Signal for data updates
     resetOccurred = Signal()     # Signal for graph reset
+    xAxisRangeChanged = Signal() # Signal for x-axis range updates
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -21,16 +22,19 @@ class GraphController(QObject):
         self._time = 0
         self._series1.append(0, 0)
         self._series2.append(0, 0)
-        self._threshold.append(0, 50)
-        self._threshold.append(100, 50)
-        self._negThreshold.append(0, -50)
-        self._negThreshold.append(100, -50)
+        self._wp = 50  # Initialize _wp to avoid undefined access
+        self._threshold.append(0, self._wp)
+        self._threshold.append(100, self._wp)
+        self._negThreshold.append(0, -self._wp)
+        self._negThreshold.append(100, -self._wp)
 
         self._points1 = []
         self._points2 = []
         
         # Motor settings
         self._running = False  # Graph update state
+        self._x_axis_min = 0   # Track x-axis range
+        self._x_axis_max = 10  # Initial range: 10 seconds
 
         # Emit signal to indicate series are ready
         self.seriesInitialized.emit()
@@ -75,6 +79,14 @@ class GraphController(QObject):
     def time(self):
         return self._time
 
+    @Property(float, notify=xAxisRangeChanged)
+    def xAxisMin(self):
+        return self._x_axis_min
+
+    @Property(float, notify=xAxisRangeChanged)
+    def xAxisMax(self):
+        return self._x_axis_max
+
     @Slot(result='QVariant')
     def getVitessePoints(self):
         points = self._series1.points()
@@ -111,14 +123,16 @@ class GraphController(QObject):
     def setWp(self, value):
         self._wp = value
         if self._running:
-            # Only update threshold series when running
+            # Update threshold series
             self._threshold.clear()
             self._negThreshold.clear()
             if self._points1:
-                self._threshold.append(self._points1[0].x(), self._wp)
-                self._threshold.append(self._points1[-1].x(), self._wp)
-                self._negThreshold.append(self._points1[0].x(), -self._wp)
-                self._negThreshold.append(self._points1[-1].x(), -self._wp)
+                x_start = self._points1[0].x()
+                x_end = self._time
+                self._threshold.append(x_start, self._wp)
+                self._threshold.append(x_end, self._wp)
+                self._negThreshold.append(x_start, -self._wp)
+                self._negThreshold.append(x_end, -self._wp)
             else:
                 self._threshold.append(0, self._wp)
                 self._threshold.append(100, self._wp)
@@ -158,27 +172,30 @@ class GraphController(QObject):
         self._series1.replace(self._points1)
         self._series2.replace(self._points2)
 
-        # Update threshold lines
+        # Update x-axis range (show last 10 seconds)
+        self._x_axis_min = max(0, self._time - 10)  # Window of 10 seconds
+        self._x_axis_max = self._time
+        self.xAxisRangeChanged.emit()
+
+        # Update threshold lines to span the visible x-range
         self._threshold.clear()
         self._negThreshold.clear()
-        if self._points1:
-            self._threshold.append(self._points1[0].x(), self._wp)
-            self._threshold.append(self._points1[-1].x(), self._wp)
-            self._negThreshold.append(self._points1[0].x(), -self._wp)
-            self._negThreshold.append(self._points1[-1].x(), -self._wp)
-        else:
-            self._threshold.append(0, self._wp)
-            self._threshold.append(100, self._wp)
-            self._negThreshold.append(0, -self._wp)
-            self._negThreshold.append(100, -self._wp)
+        x_start = self._x_axis_min
+        x_end = self._x_axis_max
+        self._threshold.append(x_start, self._wp)
+        self._threshold.append(x_end, self._wp)
+        self._negThreshold.append(x_start, -self._wp)
+        self._negThreshold.append(x_end, -self._wp)
 
         self.dataUpdated.emit()
-        print(f"Data updated: time={self._time}, vitesse={value1}, courant={value2}, wp={self._wp}")
+        print(f"Data updated: time={self._time:.1f}, x_range=[{x_start:.1f}, {x_end:.1f}], vitesse={value1}, courant={value2}, wp={self._wp}, threshold_points={self._threshold.points()}")
 
     @Slot()
     def reset_graph(self):
         """Reset the graph data."""
         self._time = 0
+        self._x_axis_min = 0
+        self._x_axis_max = 10
         self._series1.clear()
         self._series2.clear()
         self._series1.append(0, 0)
@@ -186,11 +203,12 @@ class GraphController(QObject):
         self._threshold.clear()
         self._negThreshold.clear()
         self._threshold.append(0, self._wp)
-        self._threshold.append(100, self._wp)
+        self._threshold.append(10, self._wp)
         self._negThreshold.append(0, -self._wp)
-        self._negThreshold.append(100, -self._wp)
+        self._negThreshold.append(10, -self._wp)
         self._points1 = []
         self._points2 = []
         self.dataUpdated.emit()
+        self.xAxisRangeChanged.emit()
         self.resetOccurred.emit()
         print("Graph reset")

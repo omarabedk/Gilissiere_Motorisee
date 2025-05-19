@@ -374,6 +374,10 @@ Window {
         onTriggered: {
             let randomWp = ((Math.random() * 160) - 80).toFixed(2); // -80 to 80
             graphController.setWp(parseFloat(randomWp));
+            let randomCourant = ((Math.random() * 160) - 80).toFixed(2); // -80 to 80
+            graphController.setCourant(parseFloat(randomCourant));
+            let randomVitesse = ((Math.random() * 160) - 80).toFixed(2); // -80 to 80
+            graphController.setVitesse(parseFloat(randomVitesse));
         }
     }
 }
