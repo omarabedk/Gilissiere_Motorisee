@@ -37,8 +37,10 @@ if __name__ == '__main__':
 
     # Connect vitesseReel updates to graph controller
     connection_handler.vitesseReelUpdated.connect(graph_controller.setVitesse)
+    connection_handler.vitesseReelUpdated.connect(savecsv_controller.setVitesse)
     # Connect courantReel updates to graph controller
     connection_handler.courantReelUpdated.connect(graph_controller.setCourant)
+    connection_handler.courantReelUpdated.connect(savecsv_controller.setCourant)
     
     engine.addImportPath(os.fspath(app_dir))
     for path in import_paths:
